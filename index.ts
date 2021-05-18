@@ -1,5 +1,4 @@
-// Import stylesheets
-import './style.css';
+
 const users = [
   {
     id: '1',
@@ -49,14 +48,60 @@ const accounts = [
   }
 ];
 
-['Norah | AAA-6818 | 564.67', 'Norah | AAA-4671 | 138971.19'];
-
-let output = accounts.map(el => {
+accounts.map(el => {
   users.map(item => {
     if (el.user == item.id) {
-      el.user = item.name;
+      return (el.user = item.name);
     }
   });
 });
+let arr = [];
+let str = '';
+console.log('filter by Norah with all types');
 
-console.log(output);
+let getFormattedData = () => {
+  for (let [key, value] of Object.entries(accounts)) {
+    str = value.user + ' | ' + value.account + ' | ' + value.balance;
+    arr.push(str);
+  }
+  return arr;
+};
+console.log(getFormattedData());
+
+console.log('filter by Norah with all types');
+let Norah = accounts.filter(username => {
+  return username.user === 'Norah';
+});
+console.log(Norah);
+
+console.log('filtered by account type sorted by balance ascending');
+let filterByType = type => {
+  let output = accounts
+    .filter(username => {
+      return username.account.includes(type);
+    })
+    .sort((a, b) => (+a.balance > +b.balance ? 1 : -1));
+  console.log(output);
+};
+filterByType('IRA');
+
+console.log(
+  'filtered by Alyx with IRA account type; sorted by balance descending'
+);
+let filterByAlyx = (name, type) => {
+  let output = accounts
+    .filter(username => {
+      return username.user === name && username.account.includes(type);
+    })
+    .sort((a, b) => (+a.balance > +b.balance ? -1 : 1));
+  console.log(output);
+};
+
+filterByAlyx('Alyx', 'IRA');
+
+console.log('filtered by All users; sorted by balance ascending');
+let filterByAllUser = () => {
+  let output = accounts.sort((a, b) => (+a.balance > +b.balance ? 1 : -1));
+  console.log(output);
+};
+filterByAllUser();
